@@ -1,0 +1,9 @@
+—————————————————
+私のPCのスペックについて
+—————————————————
+
+OS:           macOS Sierra
+機種:	      MacBook Air (13-inch, Early 2015)
+プロセッサ:     1.6 GHz Intel Core i5
+メモリ:	      8 GB 1600 MHz DDR3
+グラフィックス:  Intel HD Graphics 6000 1536 MB
