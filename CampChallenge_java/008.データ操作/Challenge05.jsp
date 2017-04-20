@@ -80,11 +80,17 @@
     
     //入力をクッキーへ出力する
     Cookie c;
+    if(item[0] != null) {
     c = new Cookie("name", URLEncoder.encode(item[0], "UTF-8"));
     response.addCookie(c);
+    }
+    if(item[1] != null) {
     c = new Cookie("sex", URLEncoder.encode(item[1], "UTF-8"));
     response.addCookie(c);
+    }
+    if(item[2] != null) {
     c = new Cookie("hobby", URLEncoder.encode(item[2], "UTF-8"));
     response.addCookie(c);
+    }
 
 %>
