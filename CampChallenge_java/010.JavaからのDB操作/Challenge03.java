@@ -38,19 +38,16 @@ public class Challenge03 extends HttpServlet {
             db_con = DriverManager.getConnection("jdbc:mysql://localhost:8889/Challenge_db","user","user");
             
             //Tableの要素を全て表示
-            db_st = db_con.prepareStatement("select * from user");
+            db_st = db_con.prepareStatement("select * from profiles");
             db_data = db_st.executeQuery();
             while(db_data.next()) {
-                int userID = db_data.getInt("userID");
+                int profilesID = db_data.getInt("profilesID");
                 String name = db_data.getString("name");
                 String tell = db_data.getString("tell");
                 int age = db_data.getInt("age");
                 String birthday = db_data.getString("birthday");
-                int departmentID = db_data.getInt("departmentID");
-                int stationID = db_data.getInt("stationID");
                 
-                out.print(userID+" "+name+" "+tell+" "+age+" "+" "
-                        +birthday+" "+departmentID+" "+stationID);
+                out.print(profilesID+" "+name+" "+tell+" "+age+" "+" "+birthday);
                 out.print("<br>");
             }
             
