@@ -38,32 +38,27 @@ public class Challenge02 extends HttpServlet {
             db_con = DriverManager.getConnection("jdbc:mysql://localhost:8889/Challenge_db","user","user");
             
             //データを追加するSQL文を宣言
-            db_st = db_con.prepareStatement("insert into user values(?,?,?,?,?,?,?)");
+            db_st = db_con.prepareStatement("insert into profiles values(?,?,?,?,?)");
             db_st.setInt(1, 6);
             db_st.setString(2, "高橋 実");
             db_st.setString(3, "070-1122-3344");
             db_st.setInt(4, 56);
             db_st.setString(5, "1962-05-13");
-            db_st.setInt(6, 3);
-            db_st.setInt(7, 3);
             
             //データの追加
             db_st.executeUpdate();
             
             //Tableの要素を全て表示
-            db_st = db_con.prepareStatement("select * from user");
+            db_st = db_con.prepareStatement("select * from profiles");
             db_data = db_st.executeQuery();
             while(db_data.next()) {
-                int userID = db_data.getInt("userID");
+                int profilesID = db_data.getInt("profilesID");
                 String name = db_data.getString("name");
                 String tell = db_data.getString("tell");
                 int age = db_data.getInt("age");
                 String birthday = db_data.getString("birthday");
-                int departmentID = db_data.getInt("departmentID");
-                int stationID = db_data.getInt("stationID");
                 
-                out.print(userID+" "+name+" "+tell+" "+age+" "+" "
-                        +birthday+" "+departmentID+" "+stationID);
+                out.print(profilesID+" "+name+" "+tell+" "+age+" "+" "+birthday);
                 out.print("<br>");
             }
             
