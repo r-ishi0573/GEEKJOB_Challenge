@@ -1,0 +1,41 @@
+<!--
+複合検索のフォーム
+・名前のフォームのみ部分検索
+・[OR/AND]タブで複合検索の条件を選択可(例:"名前 or 年齢 and 生年月日")
+・フォームが未入力の場合、その項目は条件指定なし
+・すべてのフォームが未入力の場合は全データを表示
+
+*****フォーム表示イメージ******
+
+名前：[　　　　] [OR/AND]
+年齢：[　　　　] [OR/AND]
+生年月日：[　　]
+送信
+***************************
+-->
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Challenge12</title>
+    </head>
+    <body>
+        <p>データ検索フォーム</p>
+        <form action="Challenge12" method="post">
+            名前：<input type="text" name="name">
+            <select name="AND_OR1">
+                <option value="OR">OR</option>
+                <option value="AND">AND</option>
+            </select>
+            <br>
+            年齢：<input type="text" name="age">       
+            <select name="AND_OR2">
+                <option value="OR">OR</option>
+                <option value="AND">AND</option>
+            </select>
+            <br>
+            生年月日：<input type="text" name="birthday"><br>
+            <input type="submit" name="btnSubmit" value="送信">
+        </form>
+    </body>
+</html>
