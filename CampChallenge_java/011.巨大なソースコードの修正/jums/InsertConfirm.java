@@ -1,3 +1,7 @@
+/*
+  課題2のソース修正
+*/
+
 package jums;
 
 import java.io.IOException;
@@ -27,12 +31,18 @@ public class InsertConfirm extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
+            /*
+              課題2の修正箇所
+            */
             HttpSession session = request.getSession();
             request.setCharacterEncoding("UTF-8");//セッションに格納する文字コードをUTF-8に変更
             String accesschk = request.getParameter("ac");
             if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
                 throw new Exception("不正なアクセスです");
             }
+            /*
+              課題2の修正箇所ここまで
+            */
             
             //フォームからの入力を取得
             String name = request.getParameter("name");
