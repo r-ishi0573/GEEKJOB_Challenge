@@ -1,4 +1,9 @@
+<!--
+   課題1のソース修正
+-->
+
 <%@page import="javax.servlet.http.HttpSession" %>
+<%@page import="jums.JumsHelper" %>
 <%
     HttpSession hs = request.getSession();
 %>
@@ -27,5 +32,7 @@
         <form action="insert" method="POST">
             <input type="submit" name="no" value="登録画面に戻る">
         </form>
+        <br>
+        <%=JumsHelper.getInstance().home()%>
     </body>
 </html>
