@@ -1,0 +1,21 @@
+<!--
+    ::ログインのページ
+      (最初に表示されるページ)::
+    1.ログインに成功すると商品管理ページ(item.jsp)へ飛ぶ
+    2.ログインに失敗するとログイン失敗のページ(loginMiss.html)へ飛ぶ
+-->
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ログイン</title>
+    </head>
+    <body>
+        <p>ログイン画面</p>
+        <form action="login" method="post">
+            username：<input type="text" name="userName"><br>
+            password：<input type="text" name="password"><br>   
+            <input type="submit" name="btnSubmit" value="送信">
+        </form>
+    </body>
+</html>

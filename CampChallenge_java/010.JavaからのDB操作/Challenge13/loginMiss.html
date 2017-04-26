@@ -1,0 +1,20 @@
+<!--
+    ::ログイン失敗のページ::
+    1.ログインに失敗するとこちらのページへ飛ぶ
+    2.ログインに成功すると商品管理ページ(item.jsp)へ飛ぶ
+-->
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>ログイン</title>
+    </head>
+    <body>
+        <p>ログイン失敗。再度入力してください。</p>
+        <form action="login" method="post">
+            username：<input type="text" name="userName"><br>
+            password：<input type="text" name="password"><br>   
+            <input type="submit" name="btnSubmit" value="送信">
+        </form>
+    </body>
+</html>
