@@ -1,6 +1,15 @@
+<!--
+    課題3のソース修正提出
+    セッションからBeansを受け取る
+    直リンク防止用の操作をBeansを利用するよう変更
+-->
 <%@page import="javax.servlet.http.HttpSession" %>
+<%@page import="jums.JumsHelper" %>
+<%@page import="jums.UserDataBeans" %>
 <%
     HttpSession hs = request.getSession();
+    //課題3
+    UserDataBeans udb = (UserDataBeans)hs.getAttribute("UDB");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -53,9 +62,14 @@
         自己紹介文
         <br>
         <textarea name="comment" rows=10 cols=50 style="resize:none" wrap="hard"></textarea><br><br>
-        
-        <input type="hidden" name="ac"  value="<%= hs.getAttribute("ac")%>">
+                <form action="insertresult" method="POST">
+        <!--<input type="hidden" name="ac"  value="<//%=hs.getAttribute("ac") %>">-->
+        <!--課題3の修正 -->
+        <input type="hidden" name="ac"  value="<%= udb.getIsAccess() %>">
+        <!--課題3ここまで -->
         <input type="submit" name="btnSubmit" value="確認画面へ">
     </form>
+        <br>
+        <%=JumsHelper.getInstance().home()%>
     </body>
 </html>

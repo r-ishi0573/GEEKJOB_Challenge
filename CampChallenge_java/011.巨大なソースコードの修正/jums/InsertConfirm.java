@@ -1,5 +1,7 @@
-/*
-  課題2のソース修正
+/**
+ * 課題3のソース修正
+ * 直リンク防止用の操作をBeansを利用するよう変更
+ * フォームからの入力をBeansに保持し、セッションにBeansオブジェクトを渡す
 */
 
 package jums;
@@ -31,17 +33,24 @@ public class InsertConfirm extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
-            /*
-              課題2の修正箇所
-            */
             HttpSession session = request.getSession();
             request.setCharacterEncoding("UTF-8");//セッションに格納する文字コードをUTF-8に変更
+            /*
             String accesschk = request.getParameter("ac");
             if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
                 throw new Exception("不正なアクセスです");
             }
+            */
             /*
-              課題2の修正箇所ここまで
+              課題3のソース修正
+            */
+            UserDataBeans udb = (UserDataBeans)session.getAttribute("UDB");
+            String accesschk = request.getParameter("ac");
+            if(accesschk ==null || udb.getIsAccess() != Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            /*
+              ここまで
             */
             
             //フォームからの入力を取得
@@ -53,6 +62,7 @@ public class InsertConfirm extends HttpServlet {
             String tell = request.getParameter("tell");
             String comment = request.getParameter("comment");
 
+            /*
             //セッションに格納
             session.setAttribute("name", name);
             session.setAttribute("year", year);
@@ -62,6 +72,25 @@ public class InsertConfirm extends HttpServlet {
             session.setAttribute("tell", tell);
             session.setAttribute("comment", comment);
             System.out.println("Session updated!!");
+            */
+            
+            /*
+              課題3のソース修正
+            */
+
+            //UserDataBeansに格納
+            udb.setName(name);
+            udb.setYear(year);
+            udb.setMonth(month);
+            udb.setDay(day);
+            udb.setType(type);
+            udb.setTell(tell);
+            udb.setComment(comment);
+            System.out.println("Bean updated!!");
+            session.setAttribute("UDB", udb);
+            /*
+              課題3のソース修正ここまで
+            */
             
             request.getRequestDispatcher("/insertconfirm.jsp").forward(request, response);
         }catch(Exception e){

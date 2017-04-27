@@ -1,3 +1,8 @@
+/**
+ * 課題3のソース修正の提出
+ * 直リンク防止用の操作をBeansを利用するよう変更
+ */
+
 package jums;
 
 import java.io.IOException;
@@ -25,7 +30,18 @@ public class Insert extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.setAttribute("ac", (int) (Math.random() * 1000));
+        //session.setAttribute("ac", (int) (Math.random() * 1000));
+        
+        /*
+          課題3のソースの修正
+        */
+        UserDataBeans udb = new UserDataBeans();
+        udb.setIsAccess((int)(Math.random() * 1000));
+        session.setAttribute("UDB", udb);
+        /*
+          課題3ここまで
+        */
+        
         request.getRequestDispatcher("/insert.jsp").forward(request, response);   
     }
 

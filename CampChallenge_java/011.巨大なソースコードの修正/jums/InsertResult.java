@@ -1,3 +1,9 @@
+/**
+ * 課題3のソース修正
+ * 直リンク防止用の操作をBeansを利用するよう変更
+ * セッションからBeansオブジェクトを受け取り、DTOへBeansの値を渡す
+*/
+
 package jums;
 
 import java.io.IOException;
@@ -31,16 +37,52 @@ public class InsertResult extends HttpServlet {
         
         //セッションスタート
         HttpSession session = request.getSession();
+        UserDataBeans udb = (UserDataBeans)session.getAttribute("UDB");
         
         try{
+            
+            request.setCharacterEncoding("UTF-8");//セッションに格納する文字コードをUTF-8に変更
+            /*
+            String accesschk = request.getParameter("ac");
+            if(accesschk ==null || (Integer)session.getAttribute("ac")!=Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            */
+            
+            /*
+              課題３のソース修正
+            */
+            String accesschk = request.getParameter("ac");
+            if(accesschk ==null || udb.getIsAccess() != Integer.parseInt(accesschk)){
+                throw new Exception("不正なアクセスです");
+            }
+            /*
+              ここまで
+            */
+            
             //ユーザー情報に対応したJavaBeansオブジェクトに格納していく
             UserDataDTO userdata = new UserDataDTO();
+            /*
             userdata.setName((String)session.getAttribute("name"));
             Calendar birthday = Calendar.getInstance();
             userdata.setBirthday(birthday.getTime());
             userdata.setType(Integer.parseInt((String)session.getAttribute("type")));
             userdata.setTell((String)session.getAttribute("tell"));
             userdata.setComment((String)session.getAttribute("comment"));
+            */
+            
+            /*
+              課題３のソース修正
+            */
+            userdata.setName((String)udb.getName());
+            Calendar birthday = Calendar.getInstance();
+            userdata.setBirthday(birthday.getTime());
+            userdata.setType(Integer.parseInt((String)udb.getType()));
+            userdata.setTell((String)udb.getTell());
+            userdata.setComment((String)udb.getComment());
+            /*
+              ここまで
+            */
             
             //DBへデータの挿入
             UserDataDAO .getInstance().insert(userdata);
