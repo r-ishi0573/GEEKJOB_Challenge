@@ -1,3 +1,19 @@
+<!--
+    課題7のソース修正提出
+    トップページを踏んだ場合にUserDataBeansのセッションが削除されるように変更
+    (他ページからトップページへ戻った場合。
+     途中でウインドウを閉じたあとに再度このページを開いた場合を想定)
+    (10行〜15行目)
+-->
+
+<!-- 課題7のソース修正 -->
+<%@page import="javax.servlet.http.HttpSession" %>
+<%@page import="jums.UserDataBeans"%>
+<%
+    HttpSession hs = request.getSession();
+    if((UserDataBeans)hs.getAttribute("UDB") != null) hs.removeAttribute("UDB");
+%>
+<!-- 課題7のソース修正ここまで -->
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ja">

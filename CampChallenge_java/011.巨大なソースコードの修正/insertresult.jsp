@@ -1,7 +1,8 @@
 <!--
-   課題3のソース修正提出
-    セッションからBeansを受け取り、Beansのデータを表示
-    直リンク防止用の操作をBeansを利用するよう変更
+   課題7のソース修正提出
+    データベース挿入、登録結果の確認が終了したため、
+    不要になったJavaDataBeansのセッションを破棄するよう変更
+    (42行目)
 -->
 
 <%@page import="javax.servlet.http.HttpSession" %>
@@ -9,7 +10,6 @@
 <%@page import="jums.UserDataBeans" %>
 <%
     HttpSession hs = request.getSession();
-    //課題3
     UserDataBeans udb = (UserDataBeans)hs.getAttribute("UDB");
 %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -30,7 +30,6 @@
         以上の内容で登録しました。<br>
         <br>
         -->
-    <!-- 課題3のソース修正 -->
         <h1>登録結果</h1><br>
         名前:<%= udb.getName() %><br>
         生年月日:<%= udb.getYear()+"年"+udb.getMonth()+"月"+udb.getDay()+"日"%><br>
@@ -38,7 +37,10 @@
         電話番号:<%= udb.getTell() %><br>
         自己紹介:<%= udb.getComment() %><br>
         以上の内容で登録しました。<br>
-    <!-- 課題3のソース修正ここまで -->
+        
+    <!-- 課題7のソース修正 -->
+        <% hs.removeAttribute("UDB"); %>
+    <!-- 課題7のソース修正ここまで -->
         <br>
         <%=JumsHelper.getInstance().home()%>
     </body>
