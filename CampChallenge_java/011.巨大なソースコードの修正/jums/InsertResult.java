@@ -1,7 +1,8 @@
 /**
- * 課題3のソース修正
- * 直リンク防止用の操作をBeansを利用するよう変更
- * セッションからBeansオブジェクトを受け取り、DTOへBeansの値を渡す
+ * 課題6のソース修正
+ * 生年月日を保持する変数birthdayにフォームから受け取った
+ * UserDataBeansの年、月、日の値を設定するよう変更
+ * (80行〜82行)
 */
 
 package jums;
@@ -71,18 +72,21 @@ public class InsertResult extends HttpServlet {
             userdata.setComment((String)session.getAttribute("comment"));
             */
             
-            /*
-              課題３のソース修正
-            */
             userdata.setName((String)udb.getName());
             Calendar birthday = Calendar.getInstance();
+            /*
+              課題6
+            */
+            birthday.set(Integer.parseInt((String)udb.getYear()),
+                    Integer.parseInt((String)udb.getMonth()) - 1, // 月は0~11で指定のため
+                    Integer.parseInt((String)udb.getDay()));
+            /*
+              課題6ここまで
+            */
             userdata.setBirthday(birthday.getTime());
             userdata.setType(Integer.parseInt((String)udb.getType()));
             userdata.setTell((String)udb.getTell());
             userdata.setComment((String)udb.getComment());
-            /*
-              ここまで
-            */
             
             //DBへデータの挿入
             UserDataDAO .getInstance().insert(userdata);
