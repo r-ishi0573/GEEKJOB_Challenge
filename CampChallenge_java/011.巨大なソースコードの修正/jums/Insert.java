@@ -1,6 +1,6 @@
 /**
- * 課題3のソース修正の提出
- * 直リンク防止用の操作をBeansを利用するよう変更
+ * 課題5のソース修正の提出
+ * 既にsessionにBeansがある場合はそのBeansをinsert.jspに渡すように変更
  */
 
 package jums;
@@ -33,14 +33,23 @@ public class Insert extends HttpServlet {
         //session.setAttribute("ac", (int) (Math.random() * 1000));
         
         /*
-          課題3のソースの修正
+          課題5のソースの修正
         */
-        UserDataBeans udb = new UserDataBeans();
+        UserDataBeans udb;
+        //初期接続等の場合、新たにBeansインスタンス作成
+        if((UserDataBeans)session.getAttribute("UDB") == null) {
+            udb = new UserDataBeans();
+        }
+        //すでにsessionにBeansが存在している場合(他ページからリンクで飛んできた)
+        else {
+            udb = (UserDataBeans)session.getAttribute("UDB");
+        }
+        /*
+          課題5ここまで
+        */
+        
         udb.setIsAccess((int)(Math.random() * 1000));
         session.setAttribute("UDB", udb);
-        /*
-          課題3ここまで
-        */
         
         request.getRequestDispatcher("/insert.jsp").forward(request, response);   
     }
