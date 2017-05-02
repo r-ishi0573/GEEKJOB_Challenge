@@ -12,7 +12,9 @@
         <title>JUMSユーザー情報検索画面</title>
     </head>
     <body>
-         <form action="SearchResult" method="POST">
+        <!-- <form action="SearchResult" method="POST"> -->
+        <!-- 値渡しの方法の変更 -->
+        <form action="SearchResult" method="GET">
         名前:
         <input type="text" name="name">
         <br><br>
@@ -20,7 +22,7 @@
         生年:　
         <select name="year">
             <option value="">----</option>
-            <% for(int i=1950; i<=2010; i++){ %>
+            <% for(int i=1950; i<=2017; i++){ %>
             <option value="<%=i%>"><%=i%></option>
             <% } %>
         </select>年生まれ

@@ -1,3 +1,7 @@
+/**
+ * フォームからuserIDを受け取り、該当userIDのテーブルをDBから削除
+ * セッションに保持している検索結果画面から該当userIDの情報を削除
+ */
 package jums;
 
 import java.io.IOException;
@@ -6,6 +10,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  *
@@ -26,19 +32,47 @@ public class DeleteResult extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        //セッションスタート
+        HttpSession session = request.getSession();
+        
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet DeleteResult</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet DeleteResult at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+            request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
+
+            /*アクセスルートチェック
+            String accesschk = request.getParameter("ac");
+            if (accesschk == null || (Integer) session.getAttribute("ac") != Integer.parseInt(accesschk)) {
+                throw new Exception("不正なアクセスです");
+            }
+            */
+            
+            //削除対象のuserIDをフォームから受け取る
+            int id = Integer.parseInt(request.getParameter("id"));
+
+            //DBのデータを削除
+            UserDataDAO.getInstance().delete(id);
+            
+            //セッションに保持している検索結果から該当データを削除する処理
+            ArrayList<UserDataDTO> uddList = (ArrayList<UserDataDTO>)session.getAttribute("resultData"); 
+
+            for (int i=0; i<uddList.size(); i++) {
+                if(uddList.get(i).getUserID() == id) {
+                 uddList.remove(i);
+                 break;
+                }
+            }
+
+            //成功したのでセッションの値を削除
+            //session.invalidate();
+
+            //結果画面での表示用に入力パラメータ―をリクエストパラメータとして保持
+            //request.setAttribute("udd", userdata);
+
+            request.getRequestDispatcher("/deleteresult.jsp").forward(request, response);
+        } catch (Exception e) {
+            //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
     }
 

@@ -1,3 +1,8 @@
+/**
+ * 修正
+ * 1.検索結果をDTO型の配列で受け取るように変更
+ * 2.検索結果の配列をスコープからセッションに渡すよう変更
+ */
 package jums;
 
 import java.io.IOException;
@@ -7,6 +12,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -38,8 +45,18 @@ public class SearchResult extends HttpServlet {
             UserDataDTO searchData = new UserDataDTO();
             udb.UD2DTOMapping(searchData);
 
-            UserDataDTO resultData = UserDataDAO .getInstance().search(searchData);
-            request.setAttribute("resultData", resultData);
+            //UserDataDTO resultData = UserDataDAO .getInstance().search(searchData);
+            /**
+             * 修正点
+             * 返り値をDTOの配列にして複数のレコードが表示できるようにする
+             */
+            ArrayList<UserDataDTO> resultData = UserDataDAO .getInstance().search(searchData);
+            
+            //request.setAttribute("resultData", resultData);
+            //修正 DTO配列をスコープからセッションへ変更
+            HttpSession session = request.getSession();
+            session.setAttribute("resultData", resultData);
+            System.out.println("Session updated!!");
             
             request.getRequestDispatcher("/searchresult.jsp").forward(request, response);  
         }catch(Exception e){
